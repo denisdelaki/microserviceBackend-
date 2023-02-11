@@ -4,18 +4,16 @@ class CustomersController < ApplicationController
         render json: customers
       end
     
-      def show
-        customer = Customer.find(params[:id])
-        render json: customer
-      end
+      # def show
+      #   customer = Customer.find(params[:id])
+      #   render json: customer
+      # end
     
       def create
-        customer = Customer.new(customer_params)
-        if customer.save
-          render json: customer, status: :created
-        else
-          render json: customer.errors, status: :unprocessable_entity
-        end
+       
+
+        customer = Customer.create!(customer_params)
+        render json: customer, status: :created
       end
     
       def update
@@ -35,6 +33,6 @@ class CustomersController < ApplicationController
     
       private
         def customer_params
-          params.require(:customer).permit(:name, :email)
+          params.permit(:firstName, :lastName, :email, :phone, :address).to_h.symbolize_keys
         end
 end
